@@ -35,7 +35,7 @@ function aStarAlgorithm(grid) {
     let closedList = [];
 
     // create OPEN list containing calculated fCost nodes
-    // Create CLOSED list containing visited nodes
+    // create CLOSED list containing visited nodes
 
     // loop
         // current = node in OPEN with lowest fCost
@@ -49,7 +49,11 @@ function aStarAlgorithm(grid) {
             // if neighbour is not traversable (wall) or neighnour is in CLOSED (already visited)
                 // skip to next neighbour
 
-            // https://www.youtube.com/watch?v=-L-WgKMFuhE
+            // if new path to neighbour is shorter or neighbour is not in OPEN
+                // set fCost of neighbour
+                // set parent of neighbour to current
+                // if neighbour is not in OPEN
+                    // add neighbour to OPEN
 }
 
 // MAIN
