@@ -13,16 +13,19 @@ class Node {
         this.isTargetNode = isTargetNode;
     }
 
-    set setGCost(gCost) {
-        this.gCost = fCost;
+    calcHCost(targetNode) {
+        this.hCost = Math.sqrt(
+            Math.pow(this.x - targetNode.x, 2) +
+            Math.pow(this.y - targetNode.y, 2)
+        );
     }
 
-    set setHCost(hCost) {
-        this.hCost = fCost;
-    }
+    calcGCost(startingNode) {
+        if(this.isStartingNode) {
+            return 0;
+        }
 
-    set setFCost(fCost) {
-        this.fCost = fCost;
+
     }
 }
 
@@ -61,6 +64,17 @@ function aStarAlgorithm(grid) {
 
     [startingNode, targetNode] = findStartingAndTargetNodes(grid);
 
+    // Calculate hCost of each node
+    grid.forEach(row => {
+        row.forEach(node => {
+            if(node.constructor.name == "Node") {
+                node.calcHCost(targetNode);
+            }
+        });
+    });
+
+    console.log(nodeGrid);
+
     openList.push(startingNode);
 
     while(true) {
@@ -84,8 +98,9 @@ function aStarAlgorithm(grid) {
                 return;
             }
 
-            console.log(calcHcost(neighbour, targetNode));
-
+            if(!openList.find(node => node == neighbour)) {
+                //todo
+            }
         });
         
         break;
@@ -192,16 +207,10 @@ function findNeighbours(grid, node) {
     return neighboursPos;
 }
 
-function calcHcost(startingNode, targetNode) {
-    return Math.sqrt(
-        Math.pow(startingNode.x - targetNode.x, 2) +
-        Math.pow(startingNode.y - targetNode.y, 2)
-    );
-}
-
 function initGrid(blueprintGrid) {
     let nodeGrid = [];
 
+    // Create nodes
     for(let row = 0; row < blueprintGrid.length; row++) {
         nodeGrid.push([]);
         for(let col = 0; col < blueprintGrid[row].length; col++) {
