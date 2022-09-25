@@ -1,23 +1,6 @@
-// Constants
-const GRID_SIZE = 10;
-const GRID_HEIGHT = 10;
-const GRID_WIDTH = 10;
-const TEST_GRID = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0, 3, 0],
-    [0, 2, 1, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-]
-
 // Classes
 class Node {
-    constructor(x, y, parentNode, isStartingNode = false, isTragetNode = false) {
+    constructor(x, y, parentNode, isStartingNode = false, isTargetNode = false) {
         this.x = x;
         this.y = y;
         this.gCost = 0;
@@ -27,7 +10,7 @@ class Node {
         this.parentNode = parentNode;
 
         this.isStartingNode = isStartingNode;
-        this.isTragetNode = isTragetNode;
+        this.isTargetNode = isTargetNode;
     }
 
     set setGCost(gCost) {
@@ -43,6 +26,32 @@ class Node {
     }
 }
 
+class WallNode {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+// Constants
+const GRID_SIZE = 10;
+const GRID_HEIGHT = 10;
+const GRID_WIDTH = 10;
+const BLUEPRINT_GRID = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1, 0, 0, 3, 0],
+    [0, 2, 1, 0, 0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+]
+
+let nodeGrid = initGrid(BLUEPRINT_GRID);
+
 // Functions
 function aStarAlgorithm(grid) {
     let openList = [];
@@ -51,8 +60,6 @@ function aStarAlgorithm(grid) {
     let targetNode;
 
     [startingNode, targetNode] = findStartingAndTargetNodes(grid);
-    startingNode = new Node(startingNode.x, startingNode.y, null, true);
-    targetNode = new Node(targetNode.x, targetNode.y, null, false, true);
 
     openList.push(startingNode);
 
@@ -73,17 +80,16 @@ function aStarAlgorithm(grid) {
             let isNodeInClosed = closedList.find(node => (node.x == neighbour.x) && (node.y == neighbour.y)) ? true : false;
 
             // If neighbour is a wall or is already visited, skip to next neighbour
-            if(grid[neighbour.x][neighbour.y] == 1 || isNodeInClosed) {
+            if(neighbour.constructor.name == "WallNode" || isNodeInClosed) {
                 return;
             }
 
-            console.log(calcHcost({x: neighbour.x, y: neighbour.y}, targetNode));
+            console.log(calcHcost(neighbour, targetNode));
 
         });
         
         break;
     }
-
     // create OPEN list containing calculated fCost nodes
     // create CLOSED list containing visited nodes
     // Add start node to open
@@ -111,16 +117,16 @@ function findStartingAndTargetNodes(grid) {
     let startingNode;
     let targetNode;
 
-    for(let row = 0; row < grid.length; row++) {
-        for(let col = 0; col < grid[row].length; col++) {
-            if (grid[row][col] == 2) {
-                startingNode = {x: row, y: col};
+    grid.forEach(row => {
+        row.forEach(node => {
+            if(node.isStartingNode) {
+                startingNode = node;
             }
-            if (grid[row][col] == 3) {
-                targetNode = {x: row, y: col};
+            if(node.isTargetNode) {
+                targetNode = node;
             }
-        }
-    }
+        });
+    });
 
     return [startingNode, targetNode];
 }
@@ -144,42 +150,42 @@ function findNeighbours(grid, node) {
     if(node.x > 0) {
         // Top Left
         if(node.y > 0) {
-            neighboursPos.push({x: node.x - 1, y: node.y - 1});
+            neighboursPos.push(grid[node.x - 1][node.y - 1]);
         }
 
         // Top Center
-        neighboursPos.push({x: node.x - 1, y: node.y});
+        neighboursPos.push(grid[node.x - 1][node.y]);
 
         // Top Right
         if(node.y < GRID_WIDTH - 1) {
-            neighboursPos.push({x: node.x - 1, y: node.y + 1});
+            neighboursPos.push(grid[node.x - 1][node.y + 1]);
         }
     }
 
     // Middle
     // Middle Left
     if(node.y > 0) {
-        neighboursPos.push({x: node.x, y: node.y - 1});
+        neighboursPos.push(grid[node.x][node.y - 1]);
     }
 
     // Middle Right
     if(node.y < GRID_WIDTH - 1) {
-        neighboursPos.push({x: node.x, y: node.y + 1});
+        neighboursPos.push(grid[node.x][node.y + 1]);
     }
 
     // Bottom
     if(node.x < GRID_HEIGHT - 1) {
-        // Top Left
+        // Bottom Left
         if(node.y > 0) {
-            neighboursPos.push({x: node.x + 1, y: node.y - 1});
+            neighboursPos.push(grid[node.x + 1][node.y - 1]);
         }
 
-        // Top Center
-        neighboursPos.push({x: node.x + 1, y: node.y});
+        // Bottom Center
+        neighboursPos.push(grid[node.x + 1][node.y]);
 
-        // Top Right
+        // Bottom Right
         if(node.y < GRID_WIDTH - 1) {
-            neighboursPos.push({x: node.x + 1, y: node.y + 1});
+            neighboursPos.push(grid[node.x + 1][node.y + 1]);
         }
     }
 
@@ -193,5 +199,41 @@ function calcHcost(startingNode, targetNode) {
     );
 }
 
+function initGrid(blueprintGrid) {
+    let nodeGrid = [];
+
+    for(let row = 0; row < blueprintGrid.length; row++) {
+        nodeGrid.push([]);
+        for(let col = 0; col < blueprintGrid[row].length; col++) {
+            let nodeType = blueprintGrid[row][col];
+
+            switch (nodeType) {
+                // Node
+                case 0:
+                    nodeGrid[row].push(new Node(row, col, null));
+                    break;
+
+                // Wall
+                case 1:
+                    nodeGrid[row].push(new WallNode(row, col));
+                    break;
+                
+                // Starting node
+                case 2:
+                    nodeGrid[row].push(new Node(row, col, null, true));
+                    break;
+                
+                // Last node
+                case 3:
+                    nodeGrid[row].push(new Node(row, col, null, false, true));
+                    break;
+            }
+        }
+    }
+
+    return nodeGrid;
+}
+
 // MAIN
-aStarAlgorithm(TEST_GRID);
+
+aStarAlgorithm(nodeGrid);
