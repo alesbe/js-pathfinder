@@ -30,7 +30,17 @@ class Node {
         this.isTragetNode = isTragetNode;
     }
 
-    
+    set setGCost(gCost) {
+        this.gCost = fCost;
+    }
+
+    set setHCost(hCost) {
+        this.hCost = fCost;
+    }
+
+    set setFCost(fCost) {
+        this.fCost = fCost;
+    }
 }
 
 // Functions
@@ -66,6 +76,9 @@ function aStarAlgorithm(grid) {
             if(grid[neighbour.x][neighbour.y] == 1 || isNodeInClosed) {
                 return;
             }
+
+            console.log(calcHcost({x: neighbour.x, y: neighbour.y}, targetNode));
+
         });
         
         break;
@@ -84,7 +97,7 @@ function aStarAlgorithm(grid) {
             // return
 
         // for each neighbour of current node:
-            // if neighbour is not traversable (wall) or neighnour is in CLOSED (already visited)
+            // if neighbour is not traversable (wall) or neighbour is in CLOSED (already visited)
                 // skip to next neighbour
 
             // if new path to neighbour is shorter or neighbour is not in OPEN
@@ -171,6 +184,13 @@ function findNeighbours(grid, node) {
     }
 
     return neighboursPos;
+}
+
+function calcHcost(startingNode, targetNode) {
+    return Math.sqrt(
+        Math.pow(startingNode.x - targetNode.x, 2) +
+        Math.pow(startingNode.y - targetNode.y, 2)
+    );
 }
 
 // MAIN
