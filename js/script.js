@@ -1,5 +1,7 @@
 // Constants
 const GRID_SIZE = 10;
+const GRID_HEIGHT = 10;
+const GRID_WIDTH = 10;
 const TEST_GRID = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
@@ -9,7 +11,7 @@ const TEST_GRID = [
     [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
     [0, 0, 0, 0, 0, 1, 0, 0, 3, 0],
-    [0, 2, 0, 0, 0, 1, 0, 0, 0, 0],
+    [0, 2, 1, 0, 0, 1, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
 ]
 
@@ -39,19 +41,33 @@ function aStarAlgorithm(grid) {
     let targetNode;
 
     [startingNode, targetNode] = findStartingAndTargetNodes(grid);
-
     startingNode = new Node(startingNode.x, startingNode.y, null, true);
     targetNode = new Node(targetNode.x, targetNode.y, null, false, true);
 
     openList.push(startingNode);
 
     while(true) {
-        let current = findLowestfCostNode(openList);
+        let currentNode = findLowestfCostNode(openList);
         
         // Move current from openList to closedList
-        openList = openList.filter(node => node != current);
-        closedList.push(current);
+        openList = openList.filter(node => node != currentNode);
+        closedList.push(currentNode);
 
+        if(currentNode == targetNode) {
+            return("path found! (todo: add path)")
+        }
+
+        // For each neighbour
+        let currentNeighbours = findNeighbours(grid, currentNode);
+        currentNeighbours.forEach(neighbour => {
+            let isNodeInClosed = closedList.find(node => (node.x == neighbour.x) && (node.y == neighbour.y)) ? true : false;
+
+            // If neighbour is a wall or is already visited, skip to next neighbour
+            if(grid[neighbour.x][neighbour.y] == 1 || isNodeInClosed) {
+                return;
+            }
+        });
+        
         break;
     }
 
@@ -106,6 +122,55 @@ function findLowestfCostNode (list) {
     });
 
     return currentLowest;
+}
+
+function findNeighbours(grid, node) {
+    let neighboursPos = [];
+
+    // Top
+    if(node.x > 0) {
+        // Top Left
+        if(node.y > 0) {
+            neighboursPos.push({x: node.x - 1, y: node.y - 1});
+        }
+
+        // Top Center
+        neighboursPos.push({x: node.x - 1, y: node.y});
+
+        // Top Right
+        if(node.y < GRID_WIDTH - 1) {
+            neighboursPos.push({x: node.x - 1, y: node.y + 1});
+        }
+    }
+
+    // Middle
+    // Middle Left
+    if(node.y > 0) {
+        neighboursPos.push({x: node.x, y: node.y - 1});
+    }
+
+    // Middle Right
+    if(node.y < GRID_WIDTH - 1) {
+        neighboursPos.push({x: node.x, y: node.y + 1});
+    }
+
+    // Bottom
+    if(node.x < GRID_HEIGHT - 1) {
+        // Top Left
+        if(node.y > 0) {
+            neighboursPos.push({x: node.x + 1, y: node.y - 1});
+        }
+
+        // Top Center
+        neighboursPos.push({x: node.x + 1, y: node.y});
+
+        // Top Right
+        if(node.y < GRID_WIDTH - 1) {
+            neighboursPos.push({x: node.x + 1, y: node.y + 1});
+        }
+    }
+
+    return neighboursPos;
 }
 
 // MAIN
