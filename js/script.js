@@ -97,8 +97,8 @@ function aStarAlgorithm(grid) {
         closedList.push(currentNode);
 
         if(currentNode.isTargetNode) {
-            console.log("Target node found at x: ",currentNode.x," y:",currentNode.y);
-            return;
+            console.log("Target node found! At x:",currentNode.x," y:",currentNode.y);
+            return getNodePath(currentNode);
         }
 
         // For each neighbour
@@ -124,8 +124,6 @@ function aStarAlgorithm(grid) {
                 we won't need to go to the starting node
                 */
             }
-
-        console.log(closedList);
         });
     }
     // create OPEN list containing calculated fCost nodes
@@ -266,6 +264,27 @@ function initGrid(blueprintGrid) {
     return nodeGrid;
 }
 
+function getNodePath(node) {
+    let pathArray = []
+
+    let isStartingNodeFound = false;
+    let currentNode = node;
+    while(!isStartingNodeFound) {
+        pathArray.push([currentNode.x, currentNode.y]);
+        currentNode = currentNode.parentNode;
+
+        if(currentNode.isStartingNode) {
+            isStartingNodeFound = true;
+            break;
+        }
+    }
+
+    // Return path from starting to target without those nodes
+    pathArray.reverse().pop();
+    return pathArray;
+}
+
 // MAIN
 
-aStarAlgorithm(nodeGrid);
+let path = aStarAlgorithm(nodeGrid);
+console.log(path);
