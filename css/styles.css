@@ -43,3 +43,7 @@ body {
 .grid__cell:hover {
     background-color: var(--light-2);
 }
+
+.grid__cell-wall {
+    background-color: black;
+}

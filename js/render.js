@@ -1,4 +1,5 @@
 const grid = document.getElementById("main-grid");
+const dropDownMenu = document.getElementById("select-algo-menu");
 
 const nRows = 45;
 const nCols = 100;
@@ -11,9 +12,26 @@ for(let row = 0; row < nRows; row++) {
     for(let col = 0; col < nCols; col++) {
         let cell = document.createElement("div");
         cell.className = "grid__cell";
+
+        cell.onmousemove = function(e) {
+            e.preventDefault();
+            if(e.buttons == 1){
+                cell.style.backgroundColor = "green";
+                //cell.className = "grid__cell-wall";
+            }
+        }
+
         row.appendChild(cell);
     }
 
     grid.appendChild(row);
 }
 
+// Setup navbar
+// TODO: fix this, use this menu to select algorithms!
+for (const child of dropDownMenu.children) {
+    child.onClick = (e) => {
+        e.preventDefault();
+        console.log("clicked!");
+    }
+}
