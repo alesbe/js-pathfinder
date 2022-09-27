@@ -13,6 +13,10 @@ class Node {
         this.isTargetNode = isTargetNode;
     }
 
+    setParent(parentNode) {
+        this.parentNode = parentNode;
+    }
+
     calcHCost(targetNode) {
         this.hCost = Math.sqrt(
             Math.pow(this.x - targetNode.x, 2) +
@@ -20,12 +24,22 @@ class Node {
         );
     }
 
-    calcGCost(startingNode) {
+    calcGCost() {
         if(this.isStartingNode) {
             return 0;
         }
 
+        // If parent node comes from side, gCost += 10, else gCost += 14
+        if(this.parentNode.x == this.x || this.parentNode.y == this.y ) {
+            this.gCost += this.parentNode.gCost + 10;
+        } else {
+            this.gCost += this.parentNode.gCost + 14;
+        }
+    }
 
+    calcFCost() {
+        this.calcGCost();
+        this.fCost = this.hCost + this.gCost;
     }
 }
 
@@ -44,12 +58,12 @@ const BLUEPRINT_GRID = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 1, 1, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0, 3, 0],
-    [0, 2, 1, 0, 0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1, 1, 0, 3, 0],
+    [0, 2, 0, 0, 0, 1, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
 ]
 
@@ -73,8 +87,6 @@ function aStarAlgorithm(grid) {
         });
     });
 
-    console.log(nodeGrid);
-
     openList.push(startingNode);
 
     while(true) {
@@ -84,8 +96,9 @@ function aStarAlgorithm(grid) {
         openList = openList.filter(node => node != currentNode);
         closedList.push(currentNode);
 
-        if(currentNode == targetNode) {
-            return("path found! (todo: add path)")
+        if(currentNode.isTargetNode) {
+            console.log("Target node found at x: ",currentNode.x," y:",currentNode.y);
+            return;
         }
 
         // For each neighbour
@@ -99,11 +112,21 @@ function aStarAlgorithm(grid) {
             }
 
             if(!openList.find(node => node == neighbour)) {
-                //todo
+                neighbour.setParent(currentNode);
+                neighbour.calcFCost();
+                
+                let isNodeInOpen = openList.find(node => (node.x == neighbour.x) && (node.y == neighbour.y)) ? true : false;
+                if (!isNodeInOpen) {
+                    openList.push(neighbour);
+                }
+                /*
+                Note: If we calculate gCost each time that we access a new node,
+                we won't need to go to the starting node
+                */
             }
+
+        console.log(closedList);
         });
-        
-        break;
     }
     // create OPEN list containing calculated fCost nodes
     // create CLOSED list containing visited nodes
