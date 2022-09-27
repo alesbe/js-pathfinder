@@ -1,3 +1,10 @@
+:root {
+    --light-1: #F0EBE3;
+    --light-2: #E4DCCF;
+    --emphasis-1: #7D9D9C;
+    --emphasis-2: #576F72;
+}
+
 body {
     margin: 0;
     display: flex;
@@ -10,6 +17,11 @@ body {
     flex: 1;
     overflow: auto;
     height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 #main-grid {
@@ -23,7 +35,11 @@ body {
 }
 
 .grid__cell {
-    background-color: blue;
+    background-color: var(--light-1);
     height: 1vw;
     width: 1vw;
+}
+
+.grid__cell:hover {
+    background-color: var(--light-2);
 }
