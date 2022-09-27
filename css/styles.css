@@ -29,21 +29,21 @@ body {
     flex-direction: column;
 }
 
-.grid__row {
+.grid-row {
     display: flex;
     flex-direction: row;
 }
 
-.grid__cell {
+.grid-cell {
     background-color: var(--light-1);
     height: 1vw;
     width: 1vw;
 }
 
-.grid__cell:hover {
+.grid-cell:hover {
     background-color: var(--light-2);
 }
 
-.grid__cell-wall {
+.grid-cell__wall {
     background-color: black;
 }

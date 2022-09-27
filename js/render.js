@@ -7,17 +7,17 @@ const nCols = 100;
 // Generate grid
 for(let row = 0; row < nRows; row++) {
     let row = document.createElement("div");
-    row.className = "grid__row";
+    row.className = "grid-row";
 
     for(let col = 0; col < nCols; col++) {
         let cell = document.createElement("div");
-        cell.className = "grid__cell";
+        cell.className = "grid-cell";
 
         cell.onmousemove = function(e) {
             e.preventDefault();
             if(e.buttons == 1){
                 cell.style.backgroundColor = "green";
-                //cell.className = "grid__cell-wall";
+                //cell.className = "grid-cell__wall";
             }
         }
 
