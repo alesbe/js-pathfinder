@@ -12,6 +12,13 @@ body {
   height: 100vh;
 }
 
+.nav-divider {
+  background-color: lightgray;
+  width: 3px;
+  height: 100%;
+  border-radius: 50px;
+}
+
 #grid-wrapper {
   flex: 1;
   overflow: auto;
@@ -46,4 +53,6 @@ body {
 
 .grid-cell__wall {
   background-color: black;
+  height: 1vw;
+  width: 1vw;
 }

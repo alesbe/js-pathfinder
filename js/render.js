@@ -5,6 +5,13 @@ const dropDownMenu = document.getElementById("select-algo-menu");
 const nRows = 45;
 const nCols = 100;
 
+const DrawModes = {
+  Wall: 0,
+  StartingNode: 1,
+  TargetNode: 2,
+  ClearNode: 3
+}
+
 // Generate grid
 for (let row = 0; row < nRows; row++) {
   let row = document.createElement("div");
@@ -17,8 +24,7 @@ for (let row = 0; row < nRows; row++) {
     cell.onmousemove = function (e) {
       e.preventDefault();
       if (e.buttons == 1) {
-        cell.style.backgroundColor = "green";
-        //cell.className = "grid-cell__wall";
+        cell.className = "grid-cell__wall";
       }
     };
 
@@ -28,11 +34,4 @@ for (let row = 0; row < nRows; row++) {
   grid.appendChild(row);
 }
 
-// Setup navbar
-// TODO: fix this, use this menu to select algorithms!
-for (const child of dropDownMenu.children) {
-  child.onClick = (e) => {
-    e.preventDefault();
-    console.log("clicked!");
-  };
-}
+// TODO: Setup navbar
