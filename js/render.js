@@ -1,17 +1,8 @@
 const grid = document.getElementById("main-grid");
+const gridWrapper = document.getElementById("grid-wrapper");
 const dropDownMenu = document.getElementById("select-algo-menu");
-var body = document.body,
-  html = document.documentElement;
 
-var height = Math.max(
-  body.scrollHeight,
-  body.offsetHeight,
-  html.clientHeight,
-  html.scrollHeight,
-  html.offsetHeight
-);
-console.log(height);
-const nRows = (height - 20) / 14;
+const nRows = 45;
 const nCols = 100;
 
 // Generate grid
