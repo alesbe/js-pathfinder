@@ -11,7 +11,7 @@ var height = Math.max(
   html.offsetHeight
 );
 console.log(height);
-const nRows = height / 14;
+const nRows = (height - 20) / 14;
 const nCols = 100;
 
 // Generate grid
