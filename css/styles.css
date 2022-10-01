@@ -1,49 +1,49 @@
 :root {
-    --light-1: #F0EBE3;
-    --light-2: #E4DCCF;
-    --emphasis-1: #7D9D9C;
-    --emphasis-2: #576F72;
+  --light-1: #f0ebe3;
+  --light-2: #e4dccf;
+  --emphasis-1: #7d9d9c;
+  --emphasis-2: #576f72;
 }
 
 body {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 #grid-wrapper {
-    overflow: auto;
-    flex: 1;
-    overflow: auto;
-    height: 100%;
+  flex: 1;
+  overflow: auto;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 #main-grid {
-    display: flex;
-    flex-direction: column;
+  max-height: 2000px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .grid-row {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .grid-cell {
-    background-color: var(--light-1);
-    height: 1vw;
-    width: 1vw;
+  background-color: var(--light-1);
+  height: 1vw;
+  width: 1vw;
 }
 
 .grid-cell:hover {
-    background-color: var(--light-2);
+  background-color: var(--light-2);
 }
 
 .grid-cell__wall {
-    background-color: black;
+  background-color: black;
 }
