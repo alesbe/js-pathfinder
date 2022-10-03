@@ -36,6 +36,35 @@ function clearGrid() {
   }
 }
 
+function parseGrid() {
+  let parsedGrid = [];
+
+  for(let row of grid.childNodes) {
+    parsedGrid.push([]);
+
+    for(let node of row.childNodes) {
+      let lastIndex = parsedGrid.length - 1;
+
+      switch(node.className) {
+        case "grid-cell__wall":
+          parsedGrid[lastIndex].push(1);
+          break;
+        case "grid-cell__starting":
+          parsedGrid[lastIndex].push(2);
+          break;
+        case "grid-cell__target":
+          parsedGrid[lastIndex].push(3);
+          break;
+        case "grid-cell__clear":
+          parsedGrid[lastIndex].push(0);
+          break;
+      }
+    }
+  }
+
+  return parsedGrid;
+}
+
 // Generate grid
 const nRows = 45;
 const nCols = 100;
@@ -100,6 +129,10 @@ clearNodeSelector.onclick = (e) => {
   console.log("Node type:", nodeTypeState);
 }
 
-clearOperation.onclick = (e) => {
+clearOperation.onclick = () => {
   clearGrid();
+}
+
+visualizeOperation.onclick = () => {
+  let parsedGrid = parseGrid();
 }
