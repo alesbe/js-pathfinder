@@ -68,3 +68,9 @@ body {
   height: 1vw;
   width: 1vw;
 }
+
+.grid-cell_path {
+  background-color: var(--emphasis-1);
+  height: 1vw;
+  width: 1vw;
+}

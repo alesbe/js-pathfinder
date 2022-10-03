@@ -1,5 +1,5 @@
 /* Grid selector */
-const grid = document.getElementById("main-grid");
+const gridContainer = document.getElementById("main-grid");
 const gridWrapper = document.getElementById("grid-wrapper");
 
 /* Node type selectors */
@@ -29,7 +29,7 @@ const AlgorithmType = {
 let nodeTypeState = NodeState.Clear;
 
 function clearGrid() {
-  for(let row of grid.childNodes) {
+  for(let row of gridContainer.childNodes) {
     for(let node of row.childNodes) {
       node.className = "grid-cell__clear";
     }
@@ -104,7 +104,13 @@ for (let row = 0; row < nRows; row++) {
     row.appendChild(cell);
   }
 
-  grid.appendChild(row);
+  gridContainer.appendChild(row);
+}
+
+function paintNode(row, col) {
+  let selectedNode = gridContainer.childNodes[row].childNodes[col];
+
+  selectedNode.className = "grid-cell_path";
 }
 
 // Setup navbar
@@ -128,7 +134,6 @@ clearNodeSelector.onclick = (e) => {
 clearOperation.onclick = () => {
   clearGrid();
 }
-
 visualizeOperation.onclick = () => {
   let parsedGrid = parseGrid();
   loadAlgorithm(AlgorithmType.Astar, parsedGrid)
