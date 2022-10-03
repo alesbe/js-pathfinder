@@ -1,4 +1,4 @@
-// Classes
+/* Classes */
 class Node {
     constructor(x, y, parentNode, isStartingNode = false, isTargetNode = false) {
         this.x = x;
@@ -50,7 +50,7 @@ class WallNode {
     }
 }
 
-// Functions
+/* Algorithms */
 function aStarAlgorithm(grid) {
     let openList = [];
     let closedList = [];
@@ -130,6 +130,7 @@ function aStarAlgorithm(grid) {
                     // add neighbour to OPEN
 }
 
+/* Helpers */
 function findStartingAndTargetNodes(grid) {
     let startingNode;
     let targetNode;
@@ -275,6 +276,7 @@ function getNodePath(node) {
     return pathArray;
 }
 
+/* Main */
 function loadAlgorithm(algorithmNumber, grid) {
     switch (algorithmNumber) {
         case 0:
@@ -287,5 +289,3 @@ function loadAlgorithm(algorithmNumber, grid) {
             break;
     }
 }
-
-// MAIN

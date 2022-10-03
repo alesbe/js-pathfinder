@@ -1,8 +1,10 @@
 :root {
-  --light-1: #f0ebe3;
-  --light-2: #e4dccf;
-  --emphasis-1: #7d9d9c;
-  --emphasis-2: #576f72;
+  --background: #f0ebe3;
+  --background-2: #e4dccf;
+  --wall-node: black;
+  --starting-node: red;
+  --target-node: blue;
+  --path-color: yellowgreen;
 }
 
 body {
@@ -30,7 +32,6 @@ body {
 }
 
 #main-grid {
-  max-height: 2000px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -42,35 +43,35 @@ body {
 }
 
 .grid-cell__clear {
-  background-color: var(--light-1);
+  background-color: var(--background);
   height: 1vw;
   width: 1vw;
 }
 
 .grid-cell__clear:hover {
-  background-color: var(--light-2);
+  background-color: var(--background-2);
 }
 
 .grid-cell__wall {
-  background-color: black;
+  background-color: var(--wall-node);
   height: 1vw;
   width: 1vw;
 }
 
 .grid-cell__starting {
-  background-color: red;
+  background-color: var(--starting-node);
   height: 1vw;
   width: 1vw;
 }
 
 .grid-cell__target {
-  background-color: blue;
+  background-color: var(--target-node);
   height: 1vw;
   width: 1vw;
 }
 
 .grid-cell_path {
-  background-color: green;
+  background-color: var(--path-color);
   height: 1vw;
   width: 1vw;
 }
