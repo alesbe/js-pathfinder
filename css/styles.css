@@ -41,18 +41,30 @@ body {
   flex-direction: row;
 }
 
-.grid-cell {
+.grid-cell__clear {
   background-color: var(--light-1);
   height: 1vw;
   width: 1vw;
 }
 
-.grid-cell:hover {
+.grid-cell__clear:hover {
   background-color: var(--light-2);
 }
 
 .grid-cell__wall {
   background-color: black;
+  height: 1vw;
+  width: 1vw;
+}
+
+.grid-cell__starting {
+  background-color: red;
+  height: 1vw;
+  width: 1vw;
+}
+
+.grid-cell__target {
+  background-color: blue;
   height: 1vw;
   width: 1vw;
 }
