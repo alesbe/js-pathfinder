@@ -111,22 +111,18 @@ for (let row = 0; row < nRows; row++) {
 wallNodeSelector.onclick = (e) => {
   e.preventDefault();
   nodeTypeState = NodeState.Wall;
-  console.log("Node type:", nodeTypeState);
 }
 startingNodeSelector.onclick = (e) => {
   e.preventDefault();
   nodeTypeState = NodeState.Starting;
-  console.log("Node type:", nodeTypeState);
 }
 targetNodeSelector.onclick = (e) => {
   e.preventDefault();
   nodeTypeState = NodeState.Target;
-  console.log("Node type:", nodeTypeState);
 }
 clearNodeSelector.onclick = (e) => {
   e.preventDefault();
   nodeTypeState = NodeState.Clear;
-  console.log("Node type:", nodeTypeState);
 }
 
 clearOperation.onclick = () => {
@@ -135,4 +131,5 @@ clearOperation.onclick = () => {
 
 visualizeOperation.onclick = () => {
   let parsedGrid = parseGrid();
+  loadAlgorithm(AlgorithmType.Astar, parsedGrid)
 }

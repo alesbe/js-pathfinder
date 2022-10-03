@@ -50,34 +50,15 @@ class WallNode {
     }
 }
 
-// Constants
-const GRID_SIZE = 10;
-const GRID_HEIGHT = 10;
-const GRID_WIDTH = 10;
-const BLUEPRINT_GRID = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 1, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 1, 0, 3, 0],
-    [0, 2, 0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-]
-
-let nodeGrid = initGrid(BLUEPRINT_GRID);
-
 // Functions
 function aStarAlgorithm(grid) {
     let openList = [];
     let closedList = [];
     let startingNode;
     let targetNode;
-
+    
     [startingNode, targetNode] = findStartingAndTargetNodes(grid);
-
+    
     // Calculate hCost of each node
     grid.forEach(row => {
         row.forEach(node => {
@@ -167,6 +148,15 @@ function findStartingAndTargetNodes(grid) {
     return [startingNode, targetNode];
 }
 
+function getGridSize(grid) {
+    let width, height;
+
+    width = grid[0].length;
+    height = grid.length;
+
+    return [width, height];
+}
+
 function findLowestfCostNode (list) {
     let currentLowest = false;
 
@@ -181,6 +171,7 @@ function findLowestfCostNode (list) {
 
 function findNeighbours(grid, node) {
     let neighboursPos = [];
+    let [gridWidth, gridHeight] = getGridSize(grid);
 
     // Top
     if(node.x > 0) {
@@ -193,7 +184,7 @@ function findNeighbours(grid, node) {
         neighboursPos.push(grid[node.x - 1][node.y]);
 
         // Top Right
-        if(node.y < GRID_WIDTH - 1) {
+        if(node.y < gridWidth - 1) {
             neighboursPos.push(grid[node.x - 1][node.y + 1]);
         }
     }
@@ -205,12 +196,12 @@ function findNeighbours(grid, node) {
     }
 
     // Middle Right
-    if(node.y < GRID_WIDTH - 1) {
+    if(node.y < gridWidth - 1) {
         neighboursPos.push(grid[node.x][node.y + 1]);
     }
 
     // Bottom
-    if(node.x < GRID_HEIGHT - 1) {
+    if(node.x < gridHeight - 1) {
         // Bottom Left
         if(node.y > 0) {
             neighboursPos.push(grid[node.x + 1][node.y - 1]);
@@ -220,7 +211,7 @@ function findNeighbours(grid, node) {
         neighboursPos.push(grid[node.x + 1][node.y]);
 
         // Bottom Right
-        if(node.y < GRID_WIDTH - 1) {
+        if(node.y < gridHeight - 1) {
             neighboursPos.push(grid[node.x + 1][node.y + 1]);
         }
     }
@@ -284,7 +275,16 @@ function getNodePath(node) {
     return pathArray;
 }
 
-// MAIN
+function loadAlgorithm(algorithmNumber, grid) {
+    switch (algorithmNumber) {
+        case 0:
+            let path = aStarAlgorithm(initGrid(grid));
+            console.log(path);
+            break;
+    
+        default:
+            break;
+    }
+}
 
-let path = aStarAlgorithm(nodeGrid);
-console.log(path);
+// MAIN
