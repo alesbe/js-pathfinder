@@ -176,17 +176,17 @@ function findNeighbours(grid, node) {
     // Top
     if(node.x > 0) {
         // Top Left
-        if(node.y > 0) {
+        /*if(node.y > 0) {
             neighboursPos.push(grid[node.x - 1][node.y - 1]);
-        }
+        }*/
 
         // Top Center
         neighboursPos.push(grid[node.x - 1][node.y]);
 
         // Top Right
-        if(node.y < gridWidth - 1) {
+        /*if(node.y < gridWidth - 1) {
             neighboursPos.push(grid[node.x - 1][node.y + 1]);
-        }
+        }*/
     }
 
     // Middle
@@ -203,17 +203,17 @@ function findNeighbours(grid, node) {
     // Bottom
     if(node.x < gridHeight - 1) {
         // Bottom Left
-        if(node.y > 0) {
+        /*if(node.y > 0) {
             neighboursPos.push(grid[node.x + 1][node.y - 1]);
-        }
+        }*/
 
         // Bottom Center
         neighboursPos.push(grid[node.x + 1][node.y]);
 
         // Bottom Right
-        if(node.y < gridHeight - 1) {
+        /*if(node.y < gridHeight - 1) {
             neighboursPos.push(grid[node.x + 1][node.y + 1]);
-        }
+        }*/
     }
 
     return neighboursPos;
@@ -280,6 +280,7 @@ function loadAlgorithm(algorithmNumber, grid) {
         case 0:
             let path = aStarAlgorithm(initGrid(grid));
             console.log(path);
+            return path;
             break;
     
         default:

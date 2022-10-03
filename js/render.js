@@ -39,7 +39,7 @@ function clearGrid() {
 function parseGrid() {
   let parsedGrid = [];
 
-  for(let row of grid.childNodes) {
+  for(let row of gridContainer.childNodes) {
     parsedGrid.push([]);
 
     for(let node of row.childNodes) {
@@ -136,5 +136,9 @@ clearOperation.onclick = () => {
 }
 visualizeOperation.onclick = () => {
   let parsedGrid = parseGrid();
-  loadAlgorithm(AlgorithmType.Astar, parsedGrid)
+  let path = loadAlgorithm(AlgorithmType.Astar, parsedGrid)
+
+  path.forEach(node => {
+    paintNode(node[0], node[1]);
+  });
 }

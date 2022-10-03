@@ -70,7 +70,7 @@ body {
 }
 
 .grid-cell_path {
-  background-color: var(--emphasis-1);
+  background-color: green;
   height: 1vw;
   width: 1vw;
 }
