@@ -283,7 +283,6 @@ function loadAlgorithm(algorithmNumber, grid) {
             let path = aStarAlgorithm(initGrid(grid));
             console.log(path);
             return path;
-            break;
     
         default:
             break;
