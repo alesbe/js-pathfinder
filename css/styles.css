@@ -12,7 +12,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: var(--backgrounds);
+  background-color: var(--background);
 }
 
 .nav-divider {
