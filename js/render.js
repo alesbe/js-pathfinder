@@ -20,8 +20,21 @@ const NodeState = {
   Clear: 3
 }
 
+const AlgorithmType = {
+  Astar: 0,
+  Dijkstra: 1
+}
+
 /* States */
-let nodeTypeState = 0;
+let nodeTypeState = NodeState.Clear;
+
+function clearGrid() {
+  for(let row of grid.childNodes) {
+    for(let node of row.childNodes) {
+      node.className = "grid-cell__clear";
+    }
+  }
+}
 
 // Generate grid
 const nRows = 45;
@@ -85,4 +98,8 @@ clearNodeSelector.onclick = (e) => {
   e.preventDefault();
   nodeTypeState = NodeState.Clear;
   console.log("Node type:", nodeTypeState);
+}
+
+clearOperation.onclick = (e) => {
+  clearGrid();
 }
