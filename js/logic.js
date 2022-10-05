@@ -123,6 +123,7 @@ function aStarAlgorithm(grid) {
             // if neighbour is not traversable (wall) or neighbour is in CLOSED (already visited)
                 // skip to next neighbour
 
+            // TODO: If is not considering this condition! (if new path to neighbour is shorter)
             // if new path to neighbour is shorter or neighbour is not in OPEN
                 // set fCost of neighbour
                 // set parent of neighbour to current
