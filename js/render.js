@@ -3,6 +3,7 @@ const gridContainer = document.getElementById("main-grid");
 const gridWrapper = document.getElementById("grid-wrapper");
 
 /* Node type selectors */
+const dropdownNodeSelector = document.getElementById("dropdown-node-selector");
 const wallNodeSelector = document.getElementById("wall-node-selector");
 const startingNodeSelector = document.getElementById("starting-node-selector");
 const targetNodeSelector = document.getElementById("target-node-selector");
@@ -117,18 +118,22 @@ function paintNode(row, col) {
 wallNodeSelector.onclick = (e) => {
   e.preventDefault();
   nodeTypeState = NodeState.Wall;
+  dropdownNodeSelector.innerHTML = "Wall node";
 }
 startingNodeSelector.onclick = (e) => {
   e.preventDefault();
   nodeTypeState = NodeState.Starting;
+  dropdownNodeSelector.innerHTML = "Starting node";
 }
 targetNodeSelector.onclick = (e) => {
   e.preventDefault();
   nodeTypeState = NodeState.Target;
+  dropdownNodeSelector.innerHTML = "Target node";
 }
 clearNodeSelector.onclick = (e) => {
   e.preventDefault();
   nodeTypeState = NodeState.Clear;
+  dropdownNodeSelector.innerHTML = "Clear node";
 }
 
 clearOperation.onclick = () => {
