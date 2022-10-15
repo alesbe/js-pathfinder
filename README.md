@@ -7,7 +7,7 @@
 |:--:| 
 | *Solved* |
 
-# [Try it online!](alesbe.github.io/js-pathfinder/)
+# [Try it online!](https://alesbe.github.io/js-pathfinder/)
 
 ## 🧠 Usage
 - Select an algorithm
