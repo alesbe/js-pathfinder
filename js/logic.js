@@ -71,12 +71,20 @@ function aStarAlgorithm(grid) {
     openList.push(startingNode);
 
     while(true) {
+
+        // If no more available nodes to check (no path found)
+        if(openList.length == 0) {
+            alert("No path found!");
+            return;
+        }
+
         let currentNode = findLowestfCostNode(openList);
         
         // Move current from openList to closedList
         openList = openList.filter(node => node != currentNode);
         closedList.push(currentNode);
 
+        // If target node found
         if(currentNode.isTargetNode) {
             console.log("Target node found! At x:",currentNode.x," y:",currentNode.y);
             return getNodePath(currentNode);
