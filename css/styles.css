@@ -5,6 +5,7 @@
   --starting-node: #cc241d;
   --target-node: #458588;
   --path-color: #d79921;
+  --cell-size: 1vmin;
 }
 
 body {
@@ -45,8 +46,8 @@ body {
 
 .grid-cell__clear {
   background-color: var(--background);
-  height: 1vw;
-  width: 1vw;
+  height: var(--cell-size);
+  width: var(--cell-size);
 }
 
 .grid-cell__clear:hover {
@@ -55,24 +56,24 @@ body {
 
 .grid-cell__wall {
   background-color: var(--wall-node);
-  height: 1vw;
-  width: 1vw;
+  height: var(--cell-size);
+  width: var(--cell-size);
 }
 
 .grid-cell__starting {
   background-color: var(--starting-node);
-  height: 1vw;
-  width: 1vw;
+  height: var(--cell-size);
+  width: var(--cell-size);
 }
 
 .grid-cell__target {
   background-color: var(--target-node);
-  height: 1vw;
-  width: 1vw;
+  height: var(--cell-size);
+  width: var(--cell-size);
 }
 
 .grid-cell_path {
   background-color: var(--path-color);
-  height: 1vw;
-  width: 1vw;
+  height: var(--cell-size);
+  width: var(--cell-size);
 }

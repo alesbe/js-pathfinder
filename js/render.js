@@ -2,6 +2,14 @@
 const gridContainer = document.getElementById("main-grid");
 const gridWrapper = document.getElementById("grid-wrapper");
 
+function updateCellSize() {
+  const size = Math.min(
+    gridWrapper.clientWidth / nCols,
+    gridWrapper.clientHeight / nRows
+  );
+  document.documentElement.style.setProperty("--cell-size", `${size}px`);
+}
+
 /* Node type selectors */
 const dropdownNodeSelector = document.getElementById("dropdown-node-selector");
 const wallNodeSelector = document.getElementById("wall-node-selector");
@@ -113,6 +121,9 @@ for (let row = 0; row < nRows; row++) {
 
   gridContainer.appendChild(row);
 }
+
+updateCellSize();
+window.addEventListener("resize", updateCellSize);
 
 function paintNode(row, col) {
   let selectedNode = gridContainer.childNodes[row].childNodes[col];
