@@ -100,18 +100,17 @@ function aStarAlgorithm(grid) {
                 return;
             }
 
-            if(!openList.find(node => node == neighbour)) {
+            const moveCost = currentNode.gCost + ((currentNode.x === neighbour.x || currentNode.y === neighbour.y) ? 10 : 14);
+            let isNodeInOpen = openList.find(node => (node.x == neighbour.x) && (node.y == neighbour.y)) ? true : false;
+
+            if(moveCost < neighbour.gCost || !isNodeInOpen) {
+                neighbour.gCost = moveCost;
+                neighbour.fCost = neighbour.gCost + neighbour.hCost;
                 neighbour.setParent(currentNode);
-                neighbour.calcFCost();
-                
-                let isNodeInOpen = openList.find(node => (node.x == neighbour.x) && (node.y == neighbour.y)) ? true : false;
+
                 if (!isNodeInOpen) {
                     openList.push(neighbour);
                 }
-                /*
-                Note: If we calculate gCost each time that we access a new node,
-                we won't need to go to the starting node
-                */
             }
         });
     }
@@ -296,4 +295,8 @@ function loadAlgorithm(algorithmNumber, grid) {
         default:
             break;
     }
+}
+
+if (typeof module !== 'undefined') {
+    module.exports = { Node, WallNode, aStarAlgorithm, initGrid, loadAlgorithm };
 }
