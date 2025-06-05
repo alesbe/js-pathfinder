@@ -9,6 +9,11 @@ const startingNodeSelector = document.getElementById("starting-node-selector");
 const targetNodeSelector = document.getElementById("target-node-selector");
 const clearNodeSelector = document.getElementById("clear-node-selector");
 
+/* Algorithm selectors */
+const dropdownAlgorithmSelector = document.getElementById("dropdown-algorithm-selector");
+const astarAlgorithmSelector = document.getElementById("astar-algorithm-selector");
+const dijkstraAlgorithmSelector = document.getElementById("dijkstra-algorithm-selector");
+
 /* Operation selector */
 const clearOperation = document.getElementById("clear-operation");
 const visualizeOperation = document.getElementById("visualize-operation");
@@ -28,6 +33,7 @@ const AlgorithmType = {
 
 /* States */
 let nodeTypeState = NodeState.Clear;
+let algorithmTypeState = AlgorithmType.Astar;
 
 function clearGrid() {
   for(let row of gridContainer.childNodes) {
@@ -115,6 +121,17 @@ function paintNode(row, col) {
 }
 
 // Setup navbar
+astarAlgorithmSelector.onclick = (e) => {
+  e.preventDefault();
+  algorithmTypeState = AlgorithmType.Astar;
+  dropdownAlgorithmSelector.innerHTML = "A*";
+}
+dijkstraAlgorithmSelector.onclick = (e) => {
+  e.preventDefault();
+  algorithmTypeState = AlgorithmType.Dijkstra;
+  dropdownAlgorithmSelector.innerHTML = "Dijkstra";
+}
+
 wallNodeSelector.onclick = (e) => {
   e.preventDefault();
   nodeTypeState = NodeState.Wall;
@@ -141,7 +158,7 @@ clearOperation.onclick = () => {
 }
 visualizeOperation.onclick = () => {
   let parsedGrid = parseGrid();
-  let path = loadAlgorithm(AlgorithmType.Astar, parsedGrid)
+  let path = loadAlgorithm(algorithmTypeState, parsedGrid)
 
   path.forEach(node => {
     paintNode(node[0], node[1]);

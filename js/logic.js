@@ -138,6 +138,68 @@ function aStarAlgorithm(grid) {
                     // add neighbour to OPEN
 }
 
+function dijkstraAlgorithm(grid) {
+    let openList = [];
+    let closedList = [];
+    let startingNode;
+    let targetNode;
+
+    [startingNode, targetNode] = findStartingAndTargetNodes(grid);
+
+    // Dijkstra does not use heuristics
+    grid.forEach(row => {
+        row.forEach(node => {
+            if (node.constructor.name == "Node") {
+                node.hCost = 0;
+                node.fCost = Number.MAX_SAFE_INTEGER;
+            }
+        });
+    });
+
+    startingNode.gCost = 0;
+    startingNode.fCost = 0;
+    openList.push(startingNode);
+
+    while (true) {
+        if (openList.length === 0) {
+            alert("No path found!");
+            return;
+        }
+
+        let currentNode = findLowestfCostNode(openList);
+
+        openList = openList.filter(node => node != currentNode);
+        closedList.push(currentNode);
+
+        if (currentNode.isTargetNode) {
+            console.log("Target node found! At x:", currentNode.x, " y:", currentNode.y);
+            return getNodePath(currentNode);
+        }
+
+        let currentNeighbours = findNeighbours(grid, currentNode);
+        currentNeighbours.forEach(neighbour => {
+            let isNodeInClosed = closedList.find(node => (node.x == neighbour.x) && (node.y == neighbour.y)) ? true : false;
+
+            if (neighbour.constructor.name == "WallNode" || isNodeInClosed) {
+                return;
+            }
+
+            const moveCost = currentNode.gCost + ((currentNode.x === neighbour.x || currentNode.y === neighbour.y) ? 10 : 14);
+            let isNodeInOpen = openList.find(node => (node.x == neighbour.x) && (node.y == neighbour.y)) ? true : false;
+
+            if (moveCost < neighbour.gCost || !isNodeInOpen) {
+                neighbour.gCost = moveCost;
+                neighbour.fCost = neighbour.gCost; // heuristic is zero
+                neighbour.setParent(currentNode);
+
+                if (!isNodeInOpen) {
+                    openList.push(neighbour);
+                }
+            }
+        });
+    }
+}
+
 /* Helpers */
 function findStartingAndTargetNodes(grid) {
     let startingNode;
@@ -291,12 +353,15 @@ function loadAlgorithm(algorithmNumber, grid) {
             let path = aStarAlgorithm(initGrid(grid));
             console.log(path);
             return path;
-    
+
+        case 1:
+            return dijkstraAlgorithm(initGrid(grid));
+
         default:
-            break;
+            return aStarAlgorithm(initGrid(grid));
     }
 }
 
 if (typeof module !== 'undefined') {
-    module.exports = { Node, WallNode, aStarAlgorithm, initGrid, loadAlgorithm };
+    module.exports = { Node, WallNode, aStarAlgorithm, dijkstraAlgorithm, initGrid, loadAlgorithm };
 }
